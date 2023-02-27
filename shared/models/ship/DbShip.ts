@@ -3,8 +3,8 @@ import { DateConverter } from "../../helpers/json-converter";
 
 @JsonObject("DbShip")
 export class DbShip {
-  @JsonProperty("id", String, true)
-  ship_id: string = null;
+  @JsonProperty("id", Number, true)
+  ship_id: number = null;
 
   @JsonProperty("name", String, true)
   ship_name: string = null;
