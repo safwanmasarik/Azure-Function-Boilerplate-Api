@@ -9,7 +9,9 @@ export class ReqCreateUpdateDeleteShip {
   @jf.string().required()
   ship_name: string;
 
-  @jf.string().required()
+  @jf.string()
+    .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "kebab case ('kebab-case', 'going-12-merry', 'jackson')")
+    .required()
   ship_code: string;
 
   @jf.string().required()

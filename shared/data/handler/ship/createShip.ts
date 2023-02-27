@@ -2,7 +2,7 @@ import { initialiseConnection, sql } from "../../../helpers/mssql";
 import { queryCreateShip } from "../../sql/ship/queryCreateShip";
 import { ReqCreateUpdateDeleteShip } from "../../../models/ship/ReqCreateUpdateDeleteShip";
 
-export async function createShip({ ship_code, ship_name, updated_by }: ReqCreateUpdateDeleteShip): Promise<{ ship_id: string }> {
+export async function createShip({ ship_code, ship_name, updated_by }: ReqCreateUpdateDeleteShip): Promise<{ ship_id: number }> {
     try {
 
         let pool = initialiseConnection();
@@ -10,7 +10,7 @@ export async function createShip({ ship_code, ship_name, updated_by }: ReqCreate
         pool.config.parseJSON = true;
 
         // Begin transaction
-        let shipId: string = null;
+        let shipId: number = null;
         const transaction = new sql.Transaction(pool);
         await transaction.begin();
         try {
@@ -23,7 +23,7 @@ export async function createShip({ ship_code, ship_name, updated_by }: ReqCreate
             query = queryCreateShip;
             queryRequest = await transaction.request();
             queryRequest.input('ship_code', sql.NVarChar, ship_code);
-            queryRequest.input('ship_code', sql.NVarChar, ship_name);
+            queryRequest.input('ship_name', sql.NVarChar, ship_name);
             queryRequest.input('updated_by', sql.NVarChar, updated_by);
 
             queryResult = await queryRequest.query(query);

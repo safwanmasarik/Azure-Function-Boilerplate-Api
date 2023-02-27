@@ -1,5 +1,5 @@
 export let queryCreateShip = `
-DECLARE @IdentityOutput TABLE(ship_id uniqueidentifier);
+DECLARE @IdentityOutput TABLE(ship_id int);
 
 INSERT INTO
     [ships](

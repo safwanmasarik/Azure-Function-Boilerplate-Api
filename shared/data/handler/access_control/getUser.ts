@@ -14,7 +14,7 @@ export async function getUser(display_name: string): Promise<object> {
 
         let queryResult = await queryRequest.query(query);
 
-        const jsonObject: object[] = queryResult.recordsets[0][0];
+        const jsonObject: object = queryResult.recordset[0][0];
 
         pool.close();
 
