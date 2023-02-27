@@ -1,5 +1,4 @@
-import initialiseConnection from "../../../helpers/mssql";
-import sql from "mssql";
+import { initialiseConnection, sql } from "../../../helpers/mssql";
 import { queryCreateShipContract } from "../../sql/ship_contract/queryCreateShipContract";
 import { Helper } from "../../../helpers/helper/helper";
 import { ReqCreateUpdateDeleteShipContract } from "../../../models/ship_contract/ReqCreateUpdateDeleteShipContract";

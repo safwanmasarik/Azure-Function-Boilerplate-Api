@@ -1,5 +1,4 @@
-import initialiseConnection from "../../../helpers/mssql";
-import sql from "mssql";
+import { initialiseConnection, sql } from "../../../helpers/mssql";
 import { ReqGetShipContract } from "../../../models/ship_contract/ReqGetShipContract";
 import { queryGetShipContracts } from "../../sql/ship_contract/queryGetShipContracts";
 

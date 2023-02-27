@@ -1,6 +1,8 @@
-import sql from "mssql"
+import sql from "mssql/msnodesqlv8";
 
-export default function initialiseConnection() {
+export function initialiseConnection() {
     let config = process.env["SQLConnectionString"];
     return new sql.ConnectionPool(config)
 }
+
+export { sql };

@@ -1,6 +1,5 @@
-import initialiseConnection from "../../../helpers/mssql";
+import { initialiseConnection, sql } from "../../../helpers/mssql";
 import { queryGetUser } from "../../sql/access_control/queryGetUser";
-import sql from "mssql";
 
 export async function getUser(display_name: string): Promise<object> {
     try {
