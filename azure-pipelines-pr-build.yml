@@ -1,0 +1,43 @@
+# Continues Integration - Quality check
+# Build, Unit test
+# Trigger in Pull Request
+
+trigger:
+  - none
+
+stages:
+  - stage: "Build"
+    displayName: "Unit Test and Build"
+    jobs:
+      - job: "Build"
+        displayName: "Perform unit test, build job"
+        pool:
+          vmImage: "windows-latest"
+
+        steps:
+          - bash: |
+              npm install
+            workingDirectory: "."
+            displayName: "Execute package install"
+
+          - bash: |
+              npm run-script test-ci
+            workingDirectory: "."
+            displayName: "Execute unit tests"
+
+          - task: PublishTestResults@2
+            inputs:
+              testResultsFormat: "JUnit"
+              testResultsFiles: "**/junit.xml"
+              mergeTestResults: true
+              testRunTitle: "Jest Unit Tests"
+              failTaskOnFailedTests: true
+            displayName: "Publish unit test report"
+            condition: always()
+
+          - bash: |
+              npm install 
+              npm run build --if-present
+              npm prune --production
+            workingDirectory: "."
+            displayName: "Execute production build"

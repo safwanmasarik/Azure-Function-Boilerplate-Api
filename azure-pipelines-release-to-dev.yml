@@ -1,0 +1,128 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  batch: true
+  branches:
+    include:
+    - dev
+
+stages:
+- stage: 'Build'
+  displayName: 'Build and publish artifact of function application'
+  jobs: 
+  - job: 'Build'
+    displayName: 'Build and publish artifact job'
+    pool:
+      vmImage: 'windows-latest'
+
+    steps:
+    - bash: |
+        npm install 
+        npm run build --if-present
+        npm prune --production
+      workingDirectory: '.'
+
+    - task: ArchiveFiles@2
+      displayName: "Archive files"
+      inputs:
+        rootFolderOrFile: "."
+        includeRootFolder: false
+        archiveFile: "./build$(Build.BuildId).zip"
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: './build$(Build.BuildId).zip'
+        artifactName: 'drop'
+
+- stage: 'Deploy'
+  displayName: 'Deploy to Azure'
+  jobs: 
+  - job: 'Deploy'
+    displayName: 'Deploy to Azure job'
+    pool:
+      vmImage: 'windows-latest'
+
+    steps:
+    - task: DownloadBuildArtifacts@0
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'drop'
+        downloadPath: '.'
+
+    - task: AzureFunctionApp@1
+      displayName: 'Deploy to azure function app'
+      inputs:
+        azureSubscription: 'serviceconnection-dev-olv'
+        appType: 'functionApp'
+        appName: 'ptsg5olvincfunc01'
+        package: './drop/build$(Build.BuildId).zip'
+        deploymentMethod: 'auto'
+
+- stage: 'Postman_API_Integration_Test'
+  displayName: 'Postman API Integration Test'
+  jobs: 
+  - job: 'Postman_API_Test'
+    displayName: 'Postman API Test'
+    pool:
+      vmImage: 'windows-latest'
+
+    steps:
+    - task: CmdLine@2
+      displayName: "Install newman"
+      inputs:
+        script: 'npm install -g newman'
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
+    - script: 'newman run testCollections/Execute_IntegrationTest.postman_collection.json -e testCollections/Execute_Environment_Dev.postman_environment.json --reporters "cli,junit" --reporter-junit-export testReport\junitReport.xml'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      displayName: 'Run API Test'
+      continueOnError: true
+
+    - task: PublishTestResults@2
+      displayName: 'Publish API Test Results'
+      inputs:
+        testResultsFiles: '$(System.DefaultWorkingDirectory)\testReport\*.xml '
+
+- stage: 'Test'
+  displayName: 'Unit Testing and Code Coverage'
+  jobs:
+  - job: 'SonarCloud'
+    displayName: 'Run SonarCloud Scanner'
+    pool:
+      vmImage: 'windows-latest'
+    
+    steps:
+
+    - bash: |
+        npm install
+        npm run-script coverage
+      workingDirectory: '.'
+      displayName: 'Execute tests coverage (Sonar)'
+      continueOnError: true
+
+    - task: SonarCloudPrepare@1
+      inputs:
+        SonarCloud: 'serviceconnection-sonarcloud-olv'
+        organization: 'digitaldelivery'
+        scannerMode: 'CLI'
+        configMode: 'manual'
+        cliProjectKey: 'OLV-API-Execute'
+        extraProperties: |
+          # Additional properties that will be passed to the scanner,
+          sonar.projectKey=OLV-API-Execute
+          sonar.sources=.
+          sonar.javascript.lcov.reportPaths=./coverage/lcov.info
+          sonar.exclusions=coverage/**, **/__tests__/**, shared/mocks/**, shared/data/**, jest.config.js, api_uac_**/**, shared/models/uac/**, shared/services/uac/** 
+        continueOnError: true
+
+    - task: SonarCloudAnalyze@1
+      continueOnError: true
+
+    - task: SonarCloudPublish@1
+      inputs:
+        pollingTimeoutSec: '300'
+      continueOnError: true
+
