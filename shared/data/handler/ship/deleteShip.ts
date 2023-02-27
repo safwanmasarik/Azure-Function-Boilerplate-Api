@@ -1,8 +1,8 @@
 import { initialiseConnection, sql } from "../../../helpers/mssql";
-import { queryDeleteShip } from "../../sql/ship/queryDeleteShip";
+import { queryPermanentDeleteShip, querySoftDeleteShip } from "../../sql/ship/queryDeleteShip";
 import { ReqCreateUpdateDeleteShip } from "../../../models/ship/ReqCreateUpdateDeleteShip";
 
-export async function deleteShip({ ship_code }: ReqCreateUpdateDeleteShip): Promise<{ ship_code: string }> {
+export async function deleteShip({ ship_code, is_permanent_delete }: ReqCreateUpdateDeleteShip): Promise<{ ship_code: string }> {
     try {
 
         let pool = initialiseConnection();
@@ -16,7 +16,13 @@ export async function deleteShip({ ship_code }: ReqCreateUpdateDeleteShip): Prom
         try {
 
             // Perform deletion of ship contract
-            let query = queryDeleteShip;
+            let query;
+            if (is_permanent_delete) {
+                query = queryPermanentDeleteShip;
+            } else {
+                query = querySoftDeleteShip;
+            };
+
             let queryRequest = await transaction.request();
             queryRequest.input('ship_code', sql.NVarChar, shipCode);
             let queryResult = await queryRequest.query(query);

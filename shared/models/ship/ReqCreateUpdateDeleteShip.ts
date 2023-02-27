@@ -3,8 +3,11 @@ import * as jf from 'joiful';
 
 export class ReqCreateUpdateDeleteShip {
 
-  @jf.any().optional()
-  ship_id: string;
+  @jf.number().optional()
+  ship_id: number;
+
+  @jf.boolean().optional()
+  is_permanent_delete: boolean;
 
   @jf.string().required()
   ship_name: string;

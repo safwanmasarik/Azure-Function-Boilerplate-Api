@@ -23,6 +23,7 @@ export async function deleteShip(req: HttpRequest): Promise<Response> {
     // For delete get the request query parameter
     const params = new ReqCreateUpdateDeleteShip();
     params.ship_code = req?.query?.ship_code ?? null;
+    params.is_permanent_delete = req?.query?.is_permanent_delete == "true" ? true : false;
 
     // Validate request query parameter
     if (!params.ship_code) {
@@ -38,7 +39,7 @@ export async function deleteShip(req: HttpRequest): Promise<Response> {
     if (shipCode) {
       return {
         is_valid: true,
-        message: `Ship is successfully deleted. Ref ship code: ${shipCode}.`
+        message: `Ship is successfully deleted ${params.is_permanent_delete ? "permanently" : "softly"}. Ref ship code: ${shipCode}.`
       }
     }
 
