@@ -2,7 +2,7 @@ import { initialiseConnection, sql } from "../../../helpers/mssql";
 import { queryUpdateShip } from "../../sql/ship/queryUpdateShip";
 import { ReqCreateUpdateDeleteShip } from "../../../models/ship/ReqCreateUpdateDeleteShip";
 
-export async function updateShip({ ship_id, ship_code, ship_name, updated_by }: ReqCreateUpdateDeleteShip): Promise<{ ship_id: string }> {
+export async function updateShip({ ship_id, ship_code, ship_name, updated_by }: ReqCreateUpdateDeleteShip): Promise<{ ship_id: number }> {
     try {
 
         let pool = initialiseConnection();
@@ -10,7 +10,7 @@ export async function updateShip({ ship_id, ship_code, ship_name, updated_by }: 
         pool.config.parseJSON = true;
 
         // Begin transaction
-        let shipId: string = ship_id;
+        let shipId: number = ship_id;
         const transaction = new sql.Transaction(pool);
         await transaction.begin();
         try {
