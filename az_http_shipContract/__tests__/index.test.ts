@@ -1,19 +1,20 @@
 import az_http_shipContract from "../index";
 import ContextStub from "../../shared/mocks/ContextStub";
 
-import { getShipContract as data_getShipContract } from '../../shared/data/handler/ship_contract/getShipContract';
-import { createShipContract as data_createShipContract } from '../../shared/data/handler/ship_contract/createShipContract';
-import { updateShipContract as data_updateShipContract } from '../../shared/data/handler/ship_contract/updateShipContract';
-import { deleteShipContract as data_deleteShipContract } from '../../shared/data/handler/ship_contract/deleteShipContract';
-import { getUser as data_getUser } from '../../shared/data/handler/access_control/getUser';
+import { getShipContract as data_getShipContract } from '../../shared/data/handler/shipContract/getShipContract';
+import { createShipContract as data_createShipContract } from '../../shared/data/handler/shipContract/createShipContract';
+import { updateShipContract as data_updateShipContract } from '../../shared/data/handler/shipContract/updateShipContract';
+import { deleteShipContract as data_deleteShipContract } from '../../shared/data/handler/shipContract/deleteShipContract';
+import { getUser as data_getUser } from '../../shared/data/handler/accessControl/getUser';
 
 import mock_data_getShipContract from "./mock_data_getShipContract";
 import mock_data_getUser from "./mock_data_getUser";
 
-jest.mock('../../shared/data/handler/ship_contract/getShipContract');
-jest.mock('../../shared/data/handler/ship_contract/createShipContract');
-jest.mock('../../shared/data/handler/ship_contract/updateShipContract');
-jest.mock('../../shared/data/handler/ship_contract/deleteShipContract');
+jest.mock('../../shared/data/handler/shipContract/getShipContract');
+jest.mock('../../shared/data/handler/shipContract/createShipContract');
+jest.mock('../../shared/data/handler/shipContract/updateShipContract');
+jest.mock('../../shared/data/handler/shipContract/deleteShipContract');
+jest.mock('../../shared/data/handler/accessControl/getUser');
 
 describe("Test az_http_shipContract function", () => {
 
@@ -35,7 +36,13 @@ describe("Test az_http_shipContract function", () => {
     (data_getShipContract as jest.Mock).mockResolvedValue(mock_data_getShipContract);
 
     const request = {
-      method: "GET"
+      method: "GET",
+      query: {
+        ship_name: null,
+        ship_code: null,
+        ship_contract_id: null,
+        ship_purpose_code: null
+      }
     };
 
     // Act
@@ -45,7 +52,7 @@ describe("Test az_http_shipContract function", () => {
     expect(response.statusCode).toEqual(200);
     expect(response.json.is_valid).toEqual(true);
     expect(response.json.message).toContain("successful");
-    expect(response.json.data_by_vessels[0].vessel_id).not.toBeNull();
+    expect(response.json.data.group_by_ship_purposes.length).toBeGreaterThan(0);
   });
 
 
@@ -58,37 +65,16 @@ describe("Test az_http_shipContract function", () => {
   it(`Send POST request and succesfully create ship contract data.`, async () => {
 
     // Arrange
-    (data_createShipContract as jest.Mock).mockResolvedValue("273655B7-3DCF-4215-877C-0F8973751A3E");
+    (data_createShipContract as jest.Mock).mockResolvedValue({ contract_id: "273655B7-3DCF-4215-877C-0F8973751A3E" });
     (data_getUser as jest.Mock).mockResolvedValue(mock_data_getUser);
 
     const request = {
       method: "POST",
       body: {
-        "vessel_id": 533062100,
-        "region_code": "SKA",
-        "contract_start": "2023-10-10",
-        "contract_end": "2023-10-16",
-        "primary_job_type_id": 7,
-        "primary_job_type_comment": "",
-        "managed_by": "OLV",
-        "secondary_jobs": [
-          {
-            "contract_start": "2023-10-11",
-            "contract_end": "2023-10-12",
-            "secondary_job_type_id": 2,
-            "secondary_job_type_comment": "",
-            "secondary_managed_by": "someone",
-            "secondary_region_code": "something"
-          },
-          {
-            "contract_start": "2023-10-13",
-            "contract_end": "2023-10-14",
-            "secondary_job_type_id": 2,
-            "secondary_job_type_comment": "",
-            "secondary_managed_by": "someone",
-            "secondary_region_code": "something"
-          }
-        ]
+        "ship_code": "millennium-falcon",
+        "ship_purpose_code": "transport-oil",
+        "contract_start": "2023-06-01",
+        "contract_end": "2023-06-30"
       }
     };
 
@@ -111,37 +97,16 @@ describe("Test az_http_shipContract function", () => {
   it(`Send POST request and fail to create ship contract data due to contract end date is lower than contract start date.`, async () => {
 
     // Arrange
-    (data_createShipContract as jest.Mock).mockResolvedValue("28735895-D14E-4EC8-B787-C6777CEA6A05");
+    (data_createShipContract as jest.Mock).mockResolvedValue({ contract_id: "273655B7-3DCF-4215-877C-0F8973751A3E" });
     (data_getUser as jest.Mock).mockResolvedValue(mock_data_getUser);
 
     const request = {
       method: "POST",
       body: {
-        "vessel_id": 533130329,
-        "region_code": "SKA",
-        "contract_start": "2023-10-10",
-        "contract_end": "2023-10-16",
-        "primary_job_type_id": 6,
-        "primary_job_type_comment": "Danial Test",
-        "managed_by": "OLV",
-        "secondary_jobs": [
-          {
-            "contract_start": "2023-10-11",
-            "contract_end": "2023-10-12",
-            "secondary_job_type_id": 2,
-            "secondary_job_type_comment": "",
-            "secondary_managed_by": "Black Adam",
-            "secondary_region_code": "DCEU"
-          },
-          {
-            "contract_start": "2023-10-13",
-            "contract_end": "2023-10-14",
-            "secondary_job_type_id": 2,
-            "secondary_job_type_comment": "",
-            "secondary_managed_by": "Dr Faith",
-            "secondary_region_code": "DCEU"
-          }
-        ]
+        "ship_code": "millennium-falcon",
+        "ship_purpose_code": "transport-oil",
+        "contract_start": "2023-06-30",
+        "contract_end": "2023-06-01"
       }
     }
 
@@ -151,7 +116,7 @@ describe("Test az_http_shipContract function", () => {
     // Assert
     expect(response.statusCode).toEqual(200);
     expect(response.json.is_valid).toEqual(false);
-    expect(response.json.message).toContain("Primary contract: [Primary contract dates overlap with existing contract date between");
+    expect(response.json.message).toContain("Contract start date must be less than contract end date.");
   });
 
 
@@ -165,22 +130,17 @@ describe("Test az_http_shipContract function", () => {
   it(`Send PUT request and succesfully update ship contract data.`, async () => {
 
     // Arrange
-    (data_updateShipContract as jest.Mock).mockResolvedValue("5756B70B-0BC5-4859-B321-E0EFFF7FBA8F");
+    (data_updateShipContract as jest.Mock).mockResolvedValue({ contract_id: "273655B7-3DCF-4215-877C-0F8973751A3E" });
     (data_getUser as jest.Mock).mockResolvedValue(mock_data_getUser);
 
     const request = {
       method: "PUT",
       body: {
-        "primary_management_id": "5756B70B-0BC5-4859-B321-E0EFFF7FBA8F",
-        "vessel_id": 533130329,
-        "vessel_name": "YINSON HERMES",
-        "region_code": "PMA",
-        "contract_start": "2023-01-01",
-        "contract_end": "2023-01-10",
-        "primary_job_type_id": 4,
-        "primary_job_type_comment": "Danial Test",
-        "secondary_jobs": [],
-        "managed_by": "OLV"
+        "ship_contract_id": "B21BA982-E0C4-4234-A184-58E7DCDE40E1",
+        "ship_code": "millennium-falcon",
+        "ship_purpose_code": "transport-passenger",
+        "contract_start": "2023-06-01",
+        "contract_end": "2023-06-30"
       }
     };
 
@@ -190,7 +150,7 @@ describe("Test az_http_shipContract function", () => {
     // Assert
     expect(response.statusCode).toEqual(200);
     expect(response.json.is_valid).toEqual(true);
-    expect(response.json.message).toContain("Contract is successfully updated. Ref primary management id:");
+    expect(response.json.message).toContain("contract is successfully updated");
   });
 
 
@@ -209,16 +169,10 @@ describe("Test az_http_shipContract function", () => {
     const request = {
       method: "PUT",
       body: {
-        "primary_management_id": "5756B70B-0BC5-4859-B321-E0EFFF7FBA8F",
-        "vessel_id": 533130329,
-        "vessel_name": "YINSON HERMES",
-        "region_code": "PMA",
-        "contract_start": "2024-01-01",
-        "contract_end": "2024-01-10",
-        "primary_job_type_id": 4,
-        "primary_job_type_comment": "Danial Test",
-        "secondary_jobs": [],
-        "managed_by": "OLV"
+        "ship_code": "millennium-falcon",
+        "ship_purpose_code": "transport-passenger",
+        "contract_start": "2023-06-01",
+        "contract_end": "2023-06-30"
       }
     };
 
@@ -228,7 +182,7 @@ describe("Test az_http_shipContract function", () => {
     // Assert
     expect(response.statusCode).toEqual(200);
     expect(response.json.is_valid).toEqual(false);
-    expect(response.json.message).toContain("Primary contract: [Primary contract dates overlap with existing contract date between");
+    expect(response.json.message).toContain("Ship contract id is required");
   });
 
 
@@ -240,13 +194,13 @@ describe("Test az_http_shipContract function", () => {
   it(`Send DELETE request and succesfully delete ship contract data.`, async () => {
 
     // Arrange
-    (data_deleteShipContract as jest.Mock).mockResolvedValue("A3B1B39C-6003-4773-A83B-D6935023BB04");
+    (data_deleteShipContract as jest.Mock).mockResolvedValue({ contract_id: "273655B7-3DCF-4215-877C-0F8973751A3E" });
     (data_getUser as jest.Mock).mockResolvedValue(mock_data_getUser);
 
     const request = {
       method: "DELETE",
-      body: {
-        "primary_management_id": "088719FA-89CB-4452-9963-E8FC408C2FFA"
+      query: {
+        ship_contract_id: "273655B7-3DCF-4215-877C-0F8973751A3E"
       }
     };
 

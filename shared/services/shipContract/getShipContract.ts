@@ -1,11 +1,11 @@
 import { JsonConvert } from "json2typescript";
-import * as data from '../../data/handler/ship_contract/getShipContract';
+import * as data from '../../data/handler/shipContract/getShipContract';
 import { HttpRequest } from "@azure/functions";
 import { ResponseBase } from "../../models/ResponseBase";
-import { DbShipContract } from "../../models/ship_contract/DbShipContract";
+import { DbShipContract } from "../../models/shipContract/DbShipContract";
 import Enumerable from "linq";
 import { Helper } from "../../helpers/helper/helper";
-import { ReqGetShipContract } from "../../models/ship_contract/ReqGetShipContract";
+import { ReqGetShipContract } from "../../models/shipContract/ReqGetShipContract";
 import * as jf from 'joiful';
 
 let jsonConvert: JsonConvert = new JsonConvert();

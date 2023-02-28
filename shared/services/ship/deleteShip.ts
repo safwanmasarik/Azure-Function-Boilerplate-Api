@@ -1,7 +1,7 @@
 import data from '../../data/handler/ship';
 import { HttpRequest } from "@azure/functions";
 import { ResponseBase } from "../../models/ResponseBase";
-import { hasValidAccess } from '../access_control/hasValidAccess';
+import { hasValidAccess } from '../accessControl/hasValidAccess';
 import { ReqCreateUpdateDeleteShip } from '../../models/ship/ReqCreateUpdateDeleteShip';
 
 class Response extends ResponseBase {

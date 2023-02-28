@@ -5,7 +5,7 @@ import { getShip as data_getShip } from '../../shared/data/handler/ship/getShip'
 import { createShip as data_createShip } from '../../shared/data/handler/ship/createShip';
 import { deleteShip as data_deleteShip } from '../../shared/data/handler/ship/deleteShip';
 import { updateShip as data_updateShip } from '../../shared/data/handler/ship/updateShip';
-import { getUser as data_getUser } from '../../shared/data/handler/access_control/getUser';
+import { getUser as data_getUser } from '../../shared/data/handler/accessControl/getUser';
 
 import mock_data_getShip from "./mock_data_getShip";
 import mock_data_getUser from "./mock_data_getUser";
@@ -14,7 +14,7 @@ jest.mock('../../shared/data/handler/ship/getShip');
 jest.mock('../../shared/data/handler/ship/createShip');
 jest.mock('../../shared/data/handler/ship/deleteShip');
 jest.mock('../../shared/data/handler/ship/updateShip');
-jest.mock('../../shared/data/handler/access_control/getUser');
+jest.mock('../../shared/data/handler/accessControl/getUser');
 
 describe("Test az_http_ship function", () => {
     let context: ContextStub;

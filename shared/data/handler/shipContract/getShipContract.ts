@@ -1,6 +1,6 @@
 import { initialiseConnection, sql } from "../../../helpers/mssql";
-import { ReqGetShipContract } from "../../../models/ship_contract/ReqGetShipContract";
-import { queryGetShipContracts } from "../../sql/ship_contract/queryGetShipContracts";
+import { ReqGetShipContract } from "../../../models/shipContract/ReqGetShipContract";
+import { queryGetShipContracts } from "../../sql/shipContract/queryGetShipContracts";
 
 
 export async function getShipContract({ ship_name, ship_code, ship_contract_id, ship_purpose_code }: ReqGetShipContract): Promise<object[]> {

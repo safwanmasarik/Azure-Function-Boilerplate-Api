@@ -1,5 +1,5 @@
 import { initialiseConnection, sql } from "../../../helpers/mssql";
-import { queryDeleteShipContract } from "../../sql/ship_contract/queryDeleteShipContract";
+import { queryDeleteShipContract } from "../../sql/shipContract/queryDeleteShipContract";
 
 export async function deleteShipContract(contract_id: string): Promise<{ contract_id: string }> {
     try {

@@ -1,8 +1,8 @@
-import data from '../../data/handler/ship_contract';
+import data from '../../data/handler/shipContract';
 import { HttpRequest } from "@azure/functions";
 import { ResponseBase } from "../../models/ResponseBase";
-import { ReqCreateUpdateDeleteShipContract } from "../../models/ship_contract/ReqCreateUpdateDeleteShipContract";
-import { hasValidAccess } from '../access_control/hasValidAccess';
+import { ReqCreateUpdateDeleteShipContract } from "../../models/shipContract/ReqCreateUpdateDeleteShipContract";
+import { hasValidAccess } from '../accessControl/hasValidAccess';
 
 class Response extends ResponseBase {
 

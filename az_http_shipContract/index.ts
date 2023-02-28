@@ -1,5 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
-import shipContractService from '../shared/services/ship_contract'
+import shipContractService from '../shared/services/shipContract'
 
 const az_http_shipContract: AzureFunction = async function (context: Context, req: HttpRequest): Promise<any> {
     if (req.method == "GET") {

@@ -1,9 +1,9 @@
-import data from '../../data/handler/ship_contract';
+import data from '../../data/handler/shipContract';
 import { HttpRequest } from "@azure/functions";
 import { ResponseBase } from "../../models/ResponseBase";
-import { ReqCreateUpdateDeleteShipContract } from "../../models/ship_contract/ReqCreateUpdateDeleteShipContract";
+import { ReqCreateUpdateDeleteShipContract } from "../../models/shipContract/ReqCreateUpdateDeleteShipContract";
 import * as jf from 'joiful';
-import { hasValidAccess } from '../access_control/hasValidAccess';
+import { hasValidAccess } from '../accessControl/hasValidAccess';
 
 class Response extends ResponseBase {
   data: { ship_contract_id: string } = {
@@ -61,7 +61,6 @@ export async function createOrUpdateShipContract(req: HttpRequest): Promise<Resp
 
     if (req.method == "PUT") {
       return await updateShipContract(params);
-      // return { is_valid: true, message: "Testing baik!" }
     }
 
     // Exist to ensure thread safety

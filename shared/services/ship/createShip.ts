@@ -3,7 +3,7 @@ import { HttpRequest } from "@azure/functions";
 import { ResponseBase } from "../../models/ResponseBase";
 import { ReqCreateUpdateDeleteShip } from '../../models/ship/ReqCreateUpdateDeleteShip';
 import * as jf from 'joiful';
-import { hasValidAccess } from '../access_control/hasValidAccess';
+import { hasValidAccess } from '../accessControl/hasValidAccess';
 
 class Response extends ResponseBase {
   data: { ship_id: number } = {

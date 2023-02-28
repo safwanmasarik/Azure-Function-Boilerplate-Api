@@ -1,8 +1,8 @@
 import { HttpRequest } from "@azure/functions";
-import { ValidAccess } from "../../models/access_control/ValidAccess";
-import * as data from '../../data/handler/access_control/getUser';
+import { ValidAccess } from "../../models/accessControl/ValidAccess";
+import * as data from '../../data/handler/accessControl/getUser';
 import { JsonConvert } from "json2typescript";
-import { DbUser } from "../../models/access_control/DbUser";
+import { DbUser } from "../../models/accessControl/DbUser";
 
 let jsonConvert: JsonConvert = new JsonConvert();
 

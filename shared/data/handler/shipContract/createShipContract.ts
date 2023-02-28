@@ -1,7 +1,7 @@
 import { initialiseConnection, sql } from "../../../helpers/mssql";
-import { queryCreateShipContract } from "../../sql/ship_contract/queryCreateShipContract";
+import { queryCreateShipContract } from "../../sql/shipContract/queryCreateShipContract";
 import { Helper } from "../../../helpers/helper/helper";
-import { ReqCreateUpdateDeleteShipContract } from "../../../models/ship_contract/ReqCreateUpdateDeleteShipContract";
+import { ReqCreateUpdateDeleteShipContract } from "../../../models/shipContract/ReqCreateUpdateDeleteShipContract";
 
 export async function createShipContract(params: ReqCreateUpdateDeleteShipContract): Promise<{ contract_id: string }> {
     try {
