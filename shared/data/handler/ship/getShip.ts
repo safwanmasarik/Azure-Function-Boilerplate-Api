@@ -20,7 +20,7 @@ export async function getShip({ ship_code, ship_name }: ReqGetShip): Promise<obj
         }
 
         if (ship_code) {
-            whereClause += ` AND sc.ship_code = @ship_code`;
+            whereClause += ` AND s.code = @ship_code`;
             queryRequest.input('ship_code', sql.NVarChar, ship_code);
         }
 

@@ -3,7 +3,7 @@ import ContextStub from "../../shared/mocks/ContextStub";
 
 import { getShip as data_getShip } from '../../shared/data/handler/ship/getShip';
 import { createShip as data_createShip } from '../../shared/data/handler/ship/createShip';
-import { deleteShip as data_deleteVoyageFeedback } from '../../shared/data/handler/ship/deleteShip';
+import { deleteShip as data_deleteShip } from '../../shared/data/handler/ship/deleteShip';
 import { updateShip as data_updateShip } from '../../shared/data/handler/ship/updateShip';
 import { getUser as data_getUser } from '../../shared/data/handler/access_control/getUser';
 
@@ -14,6 +14,7 @@ jest.mock('../../shared/data/handler/ship/getShip');
 jest.mock('../../shared/data/handler/ship/createShip');
 jest.mock('../../shared/data/handler/ship/deleteShip');
 jest.mock('../../shared/data/handler/ship/updateShip');
+jest.mock('../../shared/data/handler/access_control/getUser');
 
 describe("Test az_http_ship function", () => {
     let context: ContextStub;
@@ -30,7 +31,8 @@ describe("Test az_http_ship function", () => {
         const request = {
             method: "GET",
             query: {
-                "trip_id": "2022-04-24_GRADE ONE MANJUNG 2"
+                ship_code: "red-force",
+                ship_name: "Red Force"
             }
         };
 
@@ -41,20 +43,20 @@ describe("Test az_http_ship function", () => {
         expect(response.statusCode).toEqual(200);
         expect(response.json.is_valid).toEqual(true);
         expect(response.json.message).toContain("successful");
-        expect(response.json.trip_id).not.toBeNull();
+        expect(response.json.data.length).toBeGreaterThan(0);
     });
 
     it(`Send POST request and succesfully create ship.`, async () => {
 
         // Arrange
-        (data_createShip as jest.Mock).mockResolvedValue("273655B7-3DCF-4215-877C-0F8973751A3E");
+        (data_createShip as jest.Mock).mockResolvedValue({ ship_id: 25 });
         (data_getUser as jest.Mock).mockResolvedValue(mock_data_getUser);
 
         const request = {
             method: "POST",
             body: {
-                "trip_id": "2022-04-24_GRADE ONE MANJUNG 2",
-                "comment": "voyage was awesome, weather was good!"
+                ship_name: "Oro Jackson",
+                ship_code: "oro-jackson"
             }
         };
 
@@ -65,19 +67,44 @@ describe("Test az_http_ship function", () => {
         expect(response.statusCode).toEqual(200);
         expect(response.json.is_valid).toEqual(true);
         expect(response.json.message).toContain("successful");
+    });
+
+    it(`Send POST request and fail create ship because ship code does not match kebab case.`, async () => {
+
+        // Arrange
+        (data_createShip as jest.Mock).mockResolvedValue({ ship_id: 25 });
+        (data_getUser as jest.Mock).mockResolvedValue(mock_data_getUser);
+
+        const request = {
+            method: "POST",
+            body: {
+                ship_name: "Oro Jackson",
+                ship_code: "oroJackson"
+            }
+        };
+
+        // Act
+        const response = await az_http_ship(context, request);
+
+        // Assert
+        expect(response.statusCode).toEqual(200);
+        expect(response.json.is_valid).toEqual(false);
+        expect(response.json.message).toContain("fail");
+        expect(response.json.message).toContain("kebab");
     });
 
     it(`Send PUT request and succesfully update ship data.`, async () => {
 
         // Arrange
-        (data_updateShip as jest.Mock).mockResolvedValue("273655B7-3DCF-4215-877C-0F8973751A3E");
+        (data_updateShip as jest.Mock).mockResolvedValue({ ship_id: 25 });
         (data_getUser as jest.Mock).mockResolvedValue(mock_data_getUser);
 
         const request = {
             method: "PUT",
             body: {
-                "voyage_feedback_id": 8,
-                "comment": "(api update) Number 4, Hello bonjour, safwan testing! Veghi nice thrip comment4~"
+                "ship_id": 24,
+                "ship_name": "12 ABC Cocomelon Ship",
+                "ship_code": "12-abc-cocomelon"
             }
         };
 
@@ -90,16 +117,17 @@ describe("Test az_http_ship function", () => {
         expect(response.json.message).toContain("successful");
     });
 
-    it(`Send DELETE request and succesfully delete voyage feedback data.`, async () => {
+    it(`Send DELETE request and succesfully delete ship data.`, async () => {
 
         // Arrange
-        (data_deleteVoyageFeedback as jest.Mock).mockResolvedValue("273655B7-3DCF-4215-877C-0F8973751A3E");
+        (data_deleteShip as jest.Mock).mockResolvedValue({ ship_code: "abc" });
         (data_getUser as jest.Mock).mockResolvedValue(mock_data_getUser);
 
         const request = {
             method: "DELETE",
-            body: {
-                "voyage_feedback_id": 7
+            query: {
+                ship_code: "red-force",
+                is_permanent_delete: true
             }
         };
 
