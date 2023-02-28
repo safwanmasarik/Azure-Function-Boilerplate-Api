@@ -38,7 +38,7 @@ export async function deleteShipContract(req: HttpRequest): Promise<Response> {
     if (contractId) {
       return {
         is_valid: true,
-        message: `Ship contract is successfully deleted. Ref primary management id: ${contractId}.`
+        message: `Ship contract is successfully deleted. Ref ship contract id: ${contractId}.`
       }
     }
 

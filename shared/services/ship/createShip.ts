@@ -6,7 +6,9 @@ import * as jf from 'joiful';
 import { hasValidAccess } from '../access_control/hasValidAccess';
 
 class Response extends ResponseBase {
-
+  data: { ship_id: number } = {
+    ship_id: null
+  }
 }
 
 export async function createShip(req: HttpRequest): Promise<Response> {
@@ -18,7 +20,8 @@ export async function createShip(req: HttpRequest): Promise<Response> {
     if (!userAccess.is_valid) {
       return {
         is_valid: false,
-        message: "Access denied, you don't have sufficient permission."
+        message: "Access denied, you don't have sufficient permission.",
+        data: null
       }
     }
 
@@ -34,7 +37,8 @@ export async function createShip(req: HttpRequest): Promise<Response> {
     if (joiValidation.error) {
       return {
         is_valid: false,
-        message: joiValidation.error.message
+        message: joiValidation.error.message,
+        data: null
       };
     }
 
@@ -44,20 +48,25 @@ export async function createShip(req: HttpRequest): Promise<Response> {
     if (shipId) {
       return {
         is_valid: true,
-        message: `Ship is successfully created. Ref ship id: ${shipId}.`
+        message: `Ship is successfully created. Ref ship id: ${shipId}.`,
+        data: {
+          ship_id: shipId
+        }
       }
     }
 
     return {
       is_valid: false,
-      message: `Ship creation failed due to unknown reason.`
+      message: `Ship creation failed due to unknown reason.`,
+      data: null
     }
 
   }
   catch (error) {
     return {
       is_valid: false,
-      message: `Ship creation failed. Error message: ${error.message}.`
+      message: `Ship creation failed. Error message: ${error.message}.`,
+      data: null
     }
   }
 

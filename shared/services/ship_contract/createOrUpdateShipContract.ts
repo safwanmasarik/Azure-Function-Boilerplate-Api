@@ -6,7 +6,9 @@ import * as jf from 'joiful';
 import { hasValidAccess } from '../access_control/hasValidAccess';
 
 class Response extends ResponseBase {
-
+  data: { ship_contract_id: string } = {
+    ship_contract_id: null
+  }
 }
 
 export async function createOrUpdateShipContract(req: HttpRequest): Promise<Response> {
@@ -18,7 +20,8 @@ export async function createOrUpdateShipContract(req: HttpRequest): Promise<Resp
     if (!userAccess.is_valid) {
       return {
         is_valid: false,
-        message: "Access denied, you don't have sufficient permission."
+        message: "Access denied, you don't have sufficient permission.",
+        data: null
       }
     }
 
@@ -37,7 +40,8 @@ export async function createOrUpdateShipContract(req: HttpRequest): Promise<Resp
     if (joiValidation.error) {
       return {
         is_valid: false,
-        message: joiValidation.error.message
+        message: joiValidation.error.message,
+        data: null
       };
     }
 
@@ -45,7 +49,8 @@ export async function createOrUpdateShipContract(req: HttpRequest): Promise<Resp
     if (params.contract_start > params.contract_end) {
       return {
         is_valid: false,
-        message: "Contract start date must be less than contract end date."
+        message: "Contract start date must be less than contract end date.",
+        data: null
       };
     }
 
@@ -65,7 +70,8 @@ export async function createOrUpdateShipContract(req: HttpRequest): Promise<Resp
   catch (error) {
     return {
       is_valid: false,
-      message: error.message
+      message: error.message,
+      data: null
     }
   }
 
@@ -79,19 +85,24 @@ async function createShipContract(params: ReqCreateUpdateDeleteShipContract): Pr
     if (contractId) {
       return {
         is_valid: true,
-        message: `Ship contract is successfully created. Ref ship contract id: ${contractId}.`
+        message: `Ship contract is successfully created. Ref ship contract id: ${contractId}.`,
+        data: {
+          ship_contract_id: contractId
+        }
       }
     }
 
     return {
       is_valid: false,
-      message: `Ship contract creation failed due to unknown reason.`
+      message: `Ship contract creation failed due to unknown reason.`,
+      data: null
     }
   }
   catch (error) {
     return {
       is_valid: false,
-      message: `Ship contract creation failed. Error message: ${error.message}.`
+      message: `Ship contract creation failed. Error message: ${error.message}.`,
+      data: null
     }
   }
 }
@@ -102,7 +113,8 @@ async function updateShipContract(params: ReqCreateUpdateDeleteShipContract): Pr
     if (params.ship_contract_id == null) {
       return {
         is_valid: false,
-        message: `Ship contract id is required.`
+        message: `Ship contract id is required.`,
+        data: null
       }
     };
 
@@ -111,19 +123,24 @@ async function updateShipContract(params: ReqCreateUpdateDeleteShipContract): Pr
     if (contractId) {
       return {
         is_valid: true,
-        message: `Ship contract is successfully updated. Ref ship contract id: ${contractId}.`
+        message: `Ship contract is successfully updated. Ref ship contract id: ${contractId}.`,
+        data: {
+          ship_contract_id: contractId
+        }
       }
     }
 
     return {
       is_valid: false,
-      message: `Ship contract update failed due to unknown reason.`
+      message: `Ship contract update failed due to unknown reason.`,
+      data: null
     }
   }
   catch (error) {
     return {
       is_valid: false,
-      message: `Ship contract update failed. Error message: ${error.message}.`
+      message: `Ship contract update failed. Error message: ${error.message}.`,
+      data: null
     }
   }
 }

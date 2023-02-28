@@ -1,0 +1,490 @@
+{
+	"info": {
+		"_postman_id": "57530ef4-d8a5-46f5-9ac4-06fa7e1e8c92",
+		"name": "AzFuncBoilerplate-IntegrationTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5266698"
+	},
+	"item": [
+		{
+			"name": "ship",
+			"item": [
+				{
+					"name": "get ship",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"pm.test(\"Test ship/get ship\", () => {\r",
+									"pm.expect(jsonData).to.be.an(\"object\");\r",
+									"  pm.expect(jsonData.is_valid).to.eql(true);\r",
+									"  pm.expect(jsonData.data.length).to.be.greaterThan(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/az_http_ship",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"az_http_ship"
+							],
+							"query": [
+								{
+									"key": "ship_code",
+									"value": "red-force",
+									"disabled": true
+								},
+								{
+									"key": "ship_name",
+									"value": "Red Force",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create ship",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"shipId\", JSON.stringify(jsonData?.data?.ship_id));\r",
+									"\r",
+									"pm.test(\"Test ship/create ship\", () => {\r",
+									"pm.expect(jsonData).to.be.an(\"object\");\r",
+									"  pm.expect(jsonData.is_valid).to.eql(true);\r",
+									"  pm.expect(jsonData.data.ship_id).to.be.greaterThan(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ship_name\": \"Armada Naga\",\r\n    \"ship_code\": {{shipCode}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/az_http_ship",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"az_http_ship"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update ship",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"pm.test(\"Test ship/update ship\", () => {\r",
+									"pm.expect(jsonData).to.be.an(\"object\");\r",
+									"  pm.expect(jsonData.is_valid).to.eql(true);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ship_id\": {{shipId}},\r\n    \"ship_name\": \"Armada Naga v2.0\",\r\n    \"ship_code\": {{shipCode}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/az_http_ship",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"az_http_ship"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete ship",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let shipCode = pm.collectionVariables.get(\"shipCode\");\r",
+									"pm.request.removeQueryParams(\"ship_code\");\r",
+									"pm.request.addQueryParams(`ship_code=${JSON.parse(shipCode)}`);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"pm.test(\"Test ship/delete ship\", () => {\r",
+									"pm.expect(jsonData).to.be.an(\"object\");\r",
+									"  pm.expect(jsonData.is_valid).to.eql(true);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/az_http_ship?ship_code=armada-testing&is_permanent_delete=true",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"az_http_ship"
+							],
+							"query": [
+								{
+									"key": "ship_code",
+									"value": "armada-testing"
+								},
+								{
+									"key": "is_permanent_delete",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.collectionVariables.set(\"shipCode\", JSON.stringify(\"armada-naga\"));"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "shipContract",
+			"item": [
+				{
+					"name": "get ship contract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"pm.test(\"Test ship/get ship contract\", () => {\r",
+									"pm.expect(jsonData).to.be.an(\"object\");\r",
+									"  pm.expect(jsonData.is_valid).to.eql(true);\r",
+									"  pm.expect(jsonData.data.group_by_ship_purposes.length).to.be.greaterThan(0);\r",
+									"  pm.expect(jsonData.data.group_by_ships.length).to.be.greaterThan(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/az_http_shipContract",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"az_http_shipContract"
+							],
+							"query": [
+								{
+									"key": "ship_name",
+									"value": "Moby Dick",
+									"disabled": true
+								},
+								{
+									"key": "ship_code",
+									"value": "moby-dick",
+									"disabled": true
+								},
+								{
+									"key": "ship_contract_id",
+									"value": "FDFB08FE-A4AD-4B44-B64E-12FE28DCBA1D",
+									"disabled": true
+								},
+								{
+									"key": "ship_purpose_code",
+									"value": "pirate",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create ship contract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"shipContractId\", JSON.stringify(jsonData?.data?.ship_contract_id));\r",
+									"\r",
+									"pm.test(\"Test ship/create ship contract\", () => {\r",
+									"pm.expect(jsonData).to.be.an(\"object\");\r",
+									"  pm.expect(jsonData.is_valid).to.eql(true);\r",
+									"  pm.expect(jsonData.data.ship_contract_id).to.be.not.empty\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ship_code\": \"millennium-falcon\",\r\n    \"ship_purpose_code\": \"transport-oil\",\r\n    \"contract_start\": \"2023-06-01\",\r\n    \"contract_end\": \"2023-06-30\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/az_http_shipContract",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"az_http_shipContract"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update ship contract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"pm.test(\"Test ship/update ship contract\", () => {\r",
+									"pm.expect(jsonData).to.be.an(\"object\");\r",
+									"  pm.expect(jsonData.is_valid).to.eql(true);\r",
+									"  pm.expect(jsonData.data.ship_contract_id).to.be.not.empty\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ship_contract_id\": {{shipContractId}},\r\n    \"ship_code\": \"millennium-falcon\",\r\n    \"ship_purpose_code\": \"transport-passenger\",\r\n    \"contract_start\": \"2023-06-01\",\r\n    \"contract_end\": \"2023-06-30\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/az_http_shipContract",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"az_http_shipContract"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete ship contract",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let shipContractId = pm.collectionVariables.get(\"shipContractId\");\r",
+									"pm.request.removeQueryParams(\"ship_contract_id\");\r",
+									"pm.request.addQueryParams(`ship_contract_id=${JSON.parse(shipContractId)}`);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"pm.test(\"Test ship/delete ship contract\", () => {\r",
+									"pm.expect(jsonData).to.be.an(\"object\");\r",
+									"  pm.expect(jsonData.is_valid).to.eql(true);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/az_http_shipContract?ship_contract_id=52579612-EF64-4F3F-BA28-26515F62BFB9",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"az_http_shipContract"
+							],
+							"query": [
+								{
+									"key": "ship_contract_id",
+									"value": "52579612-EF64-4F3F-BA28-26515F62BFB9"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:7071",
+			"type": "string"
+		},
+		{
+			"key": "shipCode",
+			"value": ""
+		},
+		{
+			"key": "shipId",
+			"value": ""
+		},
+		{
+			"key": "shipContractId",
+			"value": ""
+		}
+	]
+}

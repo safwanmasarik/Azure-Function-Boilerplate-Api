@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "57530ef4-d8a5-46f5-9ac4-06fa7e1e8c92",
-		"name": "AzFuncBoilerplate-safwanmasarik",
+		"_postman_id": "6bcd947f-1244-4dbc-89a6-f740197b4184",
+		"name": "AzFuncBoilerplate-LocalTest",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "5266698"
 	},
@@ -11,6 +11,17 @@
 			"item": [
 				{
 					"name": "get ship",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -41,6 +52,26 @@
 				},
 				{
 					"name": "create ship",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -68,12 +99,23 @@
 				},
 				{
 					"name": "update ship",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"ship_id\": 28,\r\n    \"ship_name\": \"Armada Naga v2.0\",\r\n    \"ship_code\": \"armada-naga-v2\"\r\n}",
+							"raw": "{\r\n    \"ship_id\": 46,\r\n    \"ship_name\": \"Armada Naga v2.0\",\r\n    \"ship_code\": \"armada-naga\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -95,6 +137,26 @@
 				},
 				{
 					"name": "delete ship",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -121,6 +183,26 @@
 					},
 					"response": []
 				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.collectionVariables.set(\"shipCode\", JSON.stringify(\"armada-naga\"));"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
 			]
 		},
 		{
@@ -128,6 +210,17 @@
 			"item": [
 				{
 					"name": "get ship contract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -167,34 +260,18 @@
 					"response": []
 				},
 				{
-					"name": "create ship contract 01",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"ship_code\": \"moby-dick\",\r\n    \"ship_purpose_code\": \"pirate\",\r\n    \"contract_start\": \"2023-06-21\",\r\n    \"contract_end\": \"2023-07-21\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+					"name": "create ship contract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
 							}
-						},
-						"url": {
-							"raw": "{{url}}/api/az_http_shipContract",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"az_http_shipContract"
-							]
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "create ship contract 02",
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -222,12 +299,23 @@
 				},
 				{
 					"name": "update ship contract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"ship_contract_id\": \"8F53C9B4-E4AE-4BB0-834A-5792E4DB025F\",\r\n    \"ship_code\": \"millennium-falcon\",\r\n    \"ship_purpose_code\": \"transport-oil\",\r\n    \"contract_start\": \"2023-06-01\",\r\n    \"contract_end\": \"2023-06-30\"\r\n}",
+							"raw": "{\r\n    \"ship_contract_id\": \"B21BA982-E0C4-4234-A184-58E7DCDE40E1\",\r\n    \"ship_code\": \"millennium-falcon\",\r\n    \"ship_purpose_code\": \"transport-passenger\",\r\n    \"contract_start\": \"2023-06-01\",\r\n    \"contract_end\": \"2023-06-30\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -249,11 +337,31 @@
 				},
 				{
 					"name": "delete ship contract",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/az_http_shipContract?ship_contract_id=9B47E98B-E9ED-42E6-B7FA-AF64990C52AD",
+							"raw": "{{url}}/api/az_http_shipContract?ship_contract_id=B21BA982-E0C4-4234-A184-58E7DCDE40E1",
 							"host": [
 								"{{url}}"
 							],
@@ -264,12 +372,32 @@
 							"query": [
 								{
 									"key": "ship_contract_id",
-									"value": "9B47E98B-E9ED-42E6-B7FA-AF64990C52AD"
+									"value": "B21BA982-E0C4-4234-A184-58E7DCDE40E1"
 								}
 							]
 						}
 					},
 					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		}
@@ -299,6 +427,10 @@
 			"key": "url",
 			"value": "http://localhost:7071",
 			"type": "string"
+		},
+		{
+			"key": "shipCode",
+			"value": ""
 		}
 	]
 }
