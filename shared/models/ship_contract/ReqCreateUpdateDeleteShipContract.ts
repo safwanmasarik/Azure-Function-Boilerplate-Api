@@ -6,10 +6,14 @@ export class ReqCreateUpdateDeleteShipContract {
   @jf.any().optional()
   ship_contract_id: string;
 
-  @jf.string().required()
+  @jf.string()
+    .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "kebab case ('kebab-case')")
+    .required()
   ship_code: string;
 
-  @jf.string().required()
+  @jf.string()
+    .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "kebab case ('kebab-case')")
+    .required()
   ship_purpose_code: string;
 
   @jf.date().required()

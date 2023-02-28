@@ -1,0 +1,304 @@
+{
+	"info": {
+		"_postman_id": "57530ef4-d8a5-46f5-9ac4-06fa7e1e8c92",
+		"name": "AzFuncBoilerplate-safwanmasarik",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5266698"
+	},
+	"item": [
+		{
+			"name": "ship",
+			"item": [
+				{
+					"name": "get ship",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/az_http_ship",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"az_http_ship"
+							],
+							"query": [
+								{
+									"key": "ship_code",
+									"value": "red-force",
+									"disabled": true
+								},
+								{
+									"key": "ship_name",
+									"value": "Red Force",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create ship",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ship_name\": \"Armada Naga\",\r\n    \"ship_code\": \"armada-naga\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/az_http_ship",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"az_http_ship"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update ship",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ship_id\": 28,\r\n    \"ship_name\": \"Armada Naga v2.0\",\r\n    \"ship_code\": \"armada-naga-v2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/az_http_ship",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"az_http_ship"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete ship",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/az_http_ship?ship_code=armada-naga&is_permanent_delete=true",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"az_http_ship"
+							],
+							"query": [
+								{
+									"key": "ship_code",
+									"value": "armada-naga"
+								},
+								{
+									"key": "is_permanent_delete",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "shipContract",
+			"item": [
+				{
+					"name": "get ship contract",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/az_http_shipContract",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"az_http_shipContract"
+							],
+							"query": [
+								{
+									"key": "ship_name",
+									"value": "Moby Dick",
+									"disabled": true
+								},
+								{
+									"key": "ship_code",
+									"value": "moby-dick",
+									"disabled": true
+								},
+								{
+									"key": "ship_contract_id",
+									"value": "FDFB08FE-A4AD-4B44-B64E-12FE28DCBA1D",
+									"disabled": true
+								},
+								{
+									"key": "ship_purpose_code",
+									"value": "pirate",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create ship contract 01",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ship_code\": \"moby-dick\",\r\n    \"ship_purpose_code\": \"pirate\",\r\n    \"contract_start\": \"2023-06-21\",\r\n    \"contract_end\": \"2023-07-21\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/az_http_shipContract",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"az_http_shipContract"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create ship contract 02",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ship_code\": \"millennium-falcon\",\r\n    \"ship_purpose_code\": \"transport-oil\",\r\n    \"contract_start\": \"2023-06-01\",\r\n    \"contract_end\": \"2023-06-30\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/az_http_shipContract",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"az_http_shipContract"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update ship contract",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ship_contract_id\": \"8F53C9B4-E4AE-4BB0-834A-5792E4DB025F\",\r\n    \"ship_code\": \"millennium-falcon\",\r\n    \"ship_purpose_code\": \"transport-oil\",\r\n    \"contract_start\": \"2023-06-01\",\r\n    \"contract_end\": \"2023-06-30\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/az_http_shipContract",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"az_http_shipContract"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete ship contract",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/az_http_shipContract?ship_contract_id=9B47E98B-E9ED-42E6-B7FA-AF64990C52AD",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"az_http_shipContract"
+							],
+							"query": [
+								{
+									"key": "ship_contract_id",
+									"value": "9B47E98B-E9ED-42E6-B7FA-AF64990C52AD"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:7071",
+			"type": "string"
+		}
+	]
+}

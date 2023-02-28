@@ -22,6 +22,7 @@ export async function updateShipContract(params: ReqCreateUpdateDeleteShipContra
             // Perform update of ship contract
             query = queryUpdateShipContract;
             queryRequest = await transaction.request();
+            queryRequest.input('ship_contract_id', sql.NVarChar, params.ship_contract_id);
             queryRequest.input('ship_code', sql.NVarChar, params.ship_code);
             queryRequest.input('ship_purpose_code', sql.NVarChar, params.ship_purpose_code);
             queryRequest.input('contract_start_date', sql.NVarChar, Helper.ConvertSQLDate(params.contract_start, false));

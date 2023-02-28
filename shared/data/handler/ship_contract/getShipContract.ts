@@ -32,7 +32,7 @@ export async function getShipContract({ ship_name, ship_code, ship_contract_id, 
 
         if (ship_purpose_code) {
             whereClause += ` AND sc.ship_purpose_code = @ship_purpose_code`;
-            queryRequest.input('ship_purpose_code', sql.Int, ship_purpose_code);
+            queryRequest.input('ship_purpose_code', sql.NVarChar, ship_purpose_code);
         }
 
         query = query.replace("@replace", whereClause);

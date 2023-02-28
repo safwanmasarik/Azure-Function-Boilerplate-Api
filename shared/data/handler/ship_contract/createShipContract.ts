@@ -24,7 +24,7 @@ export async function createShipContract(params: ReqCreateUpdateDeleteShipContra
             query = queryCreateShipContract;
             queryRequest = await transaction.request();
             queryRequest.input('ship_code', sql.NVarChar, params.ship_code);
-            queryRequest.input('ship_purpose_code', sql.Int, params.ship_purpose_code);
+            queryRequest.input('ship_purpose_code', sql.NVarChar, params.ship_purpose_code);
             queryRequest.input('contract_start_date', sql.NVarChar, Helper.ConvertSQLDate(params.contract_start, false));
             queryRequest.input('contract_end_date', sql.NVarChar, Helper.ConvertSQLDate(params.contract_end, false));
             queryRequest.input('updated_by', sql.NVarChar, params.updated_by);
