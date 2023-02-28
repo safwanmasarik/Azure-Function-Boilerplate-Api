@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "ms-azuretools.vscode-azurefunctions",
-    "pkief.material-icon-theme"
+    "pkief.material-icon-theme",
+    "orta.vscode-jest"
   ]
 }
