@@ -75,3 +75,12 @@ This repository is 🔋 battery packed with:
 1. As part of microservice architecture, the database source code is maintained in a separate repository with Visual Studio database project.
 1. We will deploy the required database to the desired destination either local machine or Azure using Visual Studio.
 1. Follow along the README in this repository https://github.com/safwanmasarik/Azure-Function-Boilerplate-Db.
+
+# **Support** 🤩
+
+Has this Project helped you learn something New? or Helped you at work?
+Here are a few ways by which you can support.
+
+- Leave a star! ⭐
+  > ![Debug](readme_images/star.png).
+- Recommend this awesome project to your colleagues. 🥇
