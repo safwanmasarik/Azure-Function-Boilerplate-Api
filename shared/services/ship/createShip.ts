@@ -43,7 +43,17 @@ export async function createShip(req: HttpRequest): Promise<Response> {
     }
 
     // Perform action
-    let shipId = (await data.createShip(params))?.ship_id;
+
+    /** Mocking db response.
+     *  When actual database connection is available,
+     *  then remove this mocking condition and "MockDbResponse" config.
+     */
+    let shipId: number;
+    if (process.env["MockDbResponse"] == "yes") {
+      shipId = 25;
+    } else {
+      shipId = (await data.createShip(params)).ship_id;
+    };
 
     if (shipId) {
       return {

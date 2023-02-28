@@ -33,7 +33,17 @@ export async function deleteShipContract(req: HttpRequest): Promise<Response> {
     }
 
     // Perform action
-    const contractId = (await data.deleteShipContract(params.ship_contract_id)).contract_id;
+
+    /** Mocking db response.
+     *  When actual database connection is available,
+     *  then remove this mocking condition and "MockDbResponse" config.
+     */
+    let contractId: string;
+    if (process.env["MockDbResponse"] == "yes") {
+      contractId = "FDFB08FE-A4AD-4B44-B64E-12FE28DCBA1D";
+    } else {
+      contractId = (await data.deleteShipContract(params.ship_contract_id)).contract_id;
+    };
 
     if (contractId) {
       return {

@@ -47,7 +47,16 @@ export async function updateShip(req: HttpRequest): Promise<Response> {
       }
     };
 
-    let shipId = (await data.updateShip(params)).ship_id;
+    /** Mocking db response.
+     *  When actual database connection is available,
+     *  then remove this mocking condition and "MockDbResponse" config.
+     */
+    let shipId: number;
+    if (process.env["MockDbResponse"] == "yes") {
+      shipId = 25;
+    } else {
+      shipId = (await data.updateShip(params)).ship_id;
+    };
 
     if (shipId) {
       return {

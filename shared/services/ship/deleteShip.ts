@@ -34,7 +34,17 @@ export async function deleteShip(req: HttpRequest): Promise<Response> {
     }
 
     // Perform action
-    const shipCode = (await data.deleteShip(params)).ship_code;
+
+    /** Mocking db response.
+     *  When actual database connection is available,
+     *  then remove this mocking condition and "MockDbResponse" config.
+     */
+    let shipCode: string;
+    if (process.env["MockDbResponse"] == "yes") {
+      shipCode = "armada-naga";
+    } else {
+      shipCode = (await data.deleteShip(params)).ship_code;
+    };
 
     if (shipCode) {
       return {

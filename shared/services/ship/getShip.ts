@@ -5,6 +5,7 @@ import { ResponseBase } from "../../models/ResponseBase";
 import { ReqGetShip } from "../../models/ship/ReqGetShip";
 import * as jf from 'joiful';
 import { DbShip } from "../../models/ship/DbShip";
+import mock_data_getShip from "../../../az_http_ship/__tests__/mock_data_getShip";
 
 let jsonConvert: JsonConvert = new JsonConvert();
 
@@ -30,7 +31,17 @@ export async function getShip(req: HttpRequest): Promise<Response> {
       };
     };
 
-    const queryData = await data.getShip(params);
+    /** Mocking db response.
+     *  When actual database connection is available,
+     *  then remove this mocking condition and "MockDbResponse" config.
+     */
+    let queryData: object[];
+    if (process.env["MockDbResponse"] == "yes") {
+      queryData = mock_data_getShip
+    } else {
+      queryData = await data.getShip(params);
+    };
+
     let modelledDbData = jsonConvert.deserializeArray(queryData, DbShip);
 
     return {

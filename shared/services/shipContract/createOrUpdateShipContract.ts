@@ -79,7 +79,16 @@ export async function createOrUpdateShipContract(req: HttpRequest): Promise<Resp
 async function createShipContract(params: ReqCreateUpdateDeleteShipContract): Promise<Response> {
   try {
 
-    let contractId = (await data.createShipContract(params))?.contract_id;
+    /** Mocking db response.
+     *  When actual database connection is available,
+     *  then remove this mocking condition and "MockDbResponse" config.
+     */
+    let contractId: string;
+    if (process.env["MockDbResponse"] == "yes") {
+      contractId = "FDFB08FE-A4AD-4B44-B64E-12FE28DCBA1D";
+    } else {
+      contractId = (await data.createShipContract(params)).contract_id;
+    };
 
     if (contractId) {
       return {
@@ -117,7 +126,16 @@ async function updateShipContract(params: ReqCreateUpdateDeleteShipContract): Pr
       }
     };
 
-    let contractId = (await data.updateShipContract(params)).contract_id;
+    /** Mocking db response.
+     *  When actual database connection is available,
+     *  then remove this mocking condition and "MockDbResponse" config.
+     */
+    let contractId: string;
+    if (process.env["MockDbResponse"] == "yes") {
+      contractId = "FDFB08FE-A4AD-4B44-B64E-12FE28DCBA1D";
+    } else {
+      contractId = (await data.updateShipContract(params)).contract_id;
+    };
 
     if (contractId) {
       return {

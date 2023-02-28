@@ -7,6 +7,7 @@ import Enumerable from "linq";
 import { Helper } from "../../helpers/helper/helper";
 import { ReqGetShipContract } from "../../models/shipContract/ReqGetShipContract";
 import * as jf from 'joiful';
+import mock_data_getShipContract from "../../../az_http_shipContract/__tests__/mock_data_getShipContract";
 
 let jsonConvert: JsonConvert = new JsonConvert();
 
@@ -58,7 +59,17 @@ export async function getShipContract(req: HttpRequest): Promise<Response> {
       };
     }
 
-    const queryData = await data.getShipContract(params);
+    /** Mocking db response.
+     *  When actual database connection is available,
+     *  then remove this mocking condition and "MockDbResponse" config.
+     */
+    let queryData: object[];
+    if (process.env["MockDbResponse"] == "yes") {
+      queryData = mock_data_getShipContract;
+    } else {
+      queryData = await data.getShipContract(params);
+    };
+
     let modelledDbData = jsonConvert.deserializeArray(queryData, DbShipContract);
 
     // Map data
