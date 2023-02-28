@@ -52,7 +52,8 @@ This repository is 🔋 battery packed with:
 ## Setup environment setting
 
 1. In root folder, rename file `local.settings.json.template` to `local.settings.json`.
-1. Update the `SQLConnectionString` with development connection string. (Requires database deployment, more details below.)
+1. By default, the database response is mocked, hence the API run will be successful even without an actual database.
+1. (Database deployment, more details below.) If database is deployed then update the `SQLConnectionString` with development connection string and remove config `MockDbResponse`.
 
 > **Run without debugging**
 >
