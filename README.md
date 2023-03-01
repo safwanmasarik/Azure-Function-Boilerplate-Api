@@ -39,7 +39,7 @@ This repository is 🔋 battery packed with:
 - [Node.js](https://nodejs.org/en/)
 - [Git](https://git-scm.com/)
 - [Azure Functions Core Tools](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Ccsharp%2Cbash)
-- [SQL Server (for local)](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) -- download _developer_ edition
+- [SQL Server (for local)](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) — download _developer_ edition
 - [SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15)
 - [Postman](https://www.postman.com/downloads/)
 
@@ -86,5 +86,5 @@ Has this Project helped you learn something New? or Helped you at work?
 Here are a few ways by which you can support.
 
 - Leave a star! ⭐
-  > ![Debug](readme_images/star.png).
+  > ![star](readme_images/star.png)
 - Recommend this awesome project to your colleagues. 🥇
