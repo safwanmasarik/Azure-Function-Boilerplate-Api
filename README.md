@@ -1,5 +1,9 @@
 # **Azure Function Node.js Typescript Starter and Boilerplate**
 
+## Goals
+
+The goal of this repository is to provide a feature-rich starting point for any Developer / Team to kick-start their next major project using Azure Function Node.js with Typescript. This also serves as point of reference for learning advanced concepts and implementations.
+
 ## Features
 
 This repository is 🔋 battery packed with:
