@@ -17,6 +17,7 @@ This repository is 🔋 battery packed with:
 - 🤣 Joiful package — Joi for Typescript, validate api parameters with class & @decorators.
 - 📈 Typescript project diagnostics enabled — quickly catch error by compiling on background and displaying error in problems bar.
 - 📏 Auto format on save
+- 🌈 Bracket pair colorizer enabled
 - 🤖 Visual Studio code full support and intellisense.
 - 🦠 Microservice architecture — api & database separate repository, no ORM.
 
