@@ -74,6 +74,14 @@ This repository is 🔋 battery packed with:
 > Note: <br/> `npm install` will install package dependencies in `node_modules` folder.
 > <br/> `npm run build` wil execute `tsc` which compiles Typescript code to Javascript, to folder `dist`.
 
+## Run API locally
+
+1. Open Postman.
+2. Import the Postman collection located at folder `postman/AzFuncBoilerplate-LocalTest.postman_collection.json`.
+   > ![postman-import](readme_images/postman-import.png)
+3. Run API requests 😊.
+   > ![star](readme_images/postman-run.png)
+
 ## Deploy the database
 
 1. As part of microservice architecture, the database source code is maintained in a separate repository with Visual Studio database project.
