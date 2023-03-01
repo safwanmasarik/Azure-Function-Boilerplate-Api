@@ -30,7 +30,7 @@ This repository is 🔋 battery packed with:
 
 ## Detailed documentation of this boilerplate is available here:
 
-- [TODO]()
+- [dev.to/safwanmasarik/developing-professional-api-with-azure-function-typescript-boilerplate](https://dev.to/safwanmasarik/developing-professional-api-with-azure-function-typescript-boilerplate-a88)
 
 # **Getting Started**
 
