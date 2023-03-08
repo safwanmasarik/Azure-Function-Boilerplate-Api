@@ -1,7 +1,6 @@
 import sql from "mssql/msnodesqlv8";
 
 export function initialiseConnection() {
-    let connectionString = process.env["SQLConnectionString"];
 
     const config = {
         user: process.env["SQLUsername"],
