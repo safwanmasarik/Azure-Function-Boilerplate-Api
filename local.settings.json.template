@@ -2,7 +2,6 @@
   "IsEncrypted": false,
   "Values": {
     "FUNCTIONS_WORKER_RUNTIME": "node",
-    "SQLConnectionString": "Server=localhost;Database=AzFuncBoilerplate;Trusted_Connection=yes;",
     "SQLServer": "localhost",
     "SQLDatabase": "AzFuncBoilerplate",
     "SQLUsername": "",
