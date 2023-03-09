@@ -6,6 +6,7 @@ import { ReqGetShip } from "../../models/ship/ReqGetShip";
 import * as jf from 'joiful';
 import { DbShip } from "../../models/ship/DbShip";
 import mock_data_getShip from "../../../az_http_ship/__tests__/mock_data_getShip";
+import Enumerable from "linq";
 
 let jsonConvert: JsonConvert = new JsonConvert();
 
@@ -43,6 +44,9 @@ export async function getShip(req: HttpRequest): Promise<Response> {
     };
 
     let modelledDbData = jsonConvert.deserializeArray(queryData, DbShip);
+
+    // Sort data
+    modelledDbData = Enumerable.from(modelledDbData).orderBy(s => s.ship_id).toArray();
 
     return {
       is_valid: true,

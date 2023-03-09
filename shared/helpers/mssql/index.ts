@@ -8,9 +8,8 @@ export function initialiseConnection() {
         server: process.env["SQLServer"],
         database: process.env["SQLDatabase"],
         options: {
-            encrypt: false, // for azure set to true
-            trustedConnection: true, // Use Windows authentication (local)
-            trustServerCertificate: false // change to true for local dev / self-signed certs
+            encrypt: false, // set to true for Azure SQL
+            trustedConnection: true, // set to true if use Windows authentication for local db
         },
         beforeConnect: function (bcConfig) {
             // Modify the connection options here
